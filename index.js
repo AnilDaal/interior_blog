@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGO_DB, (err) => {
   if (err) {
     console.log(err.message);
   } else {
-    console.log("mongoose connect successfully");
+    console.log("mongoose connect successfully...");
   }
 });
 
