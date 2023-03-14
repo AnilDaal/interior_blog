@@ -43,11 +43,11 @@ export default (err, req, res, next) => {
   if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
-    let error;
-    if (err.name === "CastError") {
-      error = handleCastErrorDB(err);
-    } else if (err.code === 11000) {
-      error = handelDuplicateFieldsDB(err);
+    let error = { ...err };
+    if (error.name === "CastError") {
+      error = handleCastErrorDB(error);
+    } else if (error.code === 11000) {
+      error = handelDuplicateFieldsDB(error);
     }
     sendErrorProd(error, res);
   }

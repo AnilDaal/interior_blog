@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 // admin login
 
 const adminLogin = catchAsync(async (req, res, next) => {
-  console.log("helo");
   const { email, password } = req.body;
   const adminData = await Admin.findOne({ email });
   // if (adminData.isVerified) {

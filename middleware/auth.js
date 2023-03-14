@@ -8,9 +8,8 @@ const adminAuth = catchAsync(async (req, res, next) => {
     let tokenData = jwt.verify(token, process.env.SECRET_KEY);
     req.adminData = tokenData.user;
   } else {
-    next(new AppError("token not fonnd", 401));
+    return next(new AppError("token not fonnd", 401));
   }
-  console.log("helo");
   next();
 });
 

@@ -6,6 +6,7 @@ import AppError from "./utils/appError.js";
 import globelErrorHandling from "./controllers/errorController.js";
 import publicRoute from "./routes/publicRoute.js";
 import morgan from "morgan";
+import cors from "cors";
 
 dotenv.config({ path: "./.env" });
 
@@ -28,6 +29,7 @@ process.on("unhandledRejection", (err) => {
   process.exit(1);
 });
 
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 mongoose.set("strictQuery", false);

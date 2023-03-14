@@ -24,13 +24,13 @@ router.route("/signup").post(adminSignup);
 // router.route("/isverify").post(verifyEmail)
 
 // post Controler
-router.route("/post").get(getAllPost).post(adminAuth, createPost);
+router.route("/post").get(adminAuth, getAllPost).post(adminAuth, createPost);
 router
   .route("/post/:postId")
-  .get(getSinglePost)
+  .get(adminAuth, getSinglePost)
   .delete(adminAuth, deletePost)
   .put(adminAuth, updatePost);
-router.route("/post/:postId/comment").get(getSinglePostComment);
+router.route("/post/:postId/comment").get(adminAuth, getSinglePostComment);
 // user Controler
 router.route("/user").get(adminAuth, getAllUser);
 router
