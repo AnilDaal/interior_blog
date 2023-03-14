@@ -1,13 +1,14 @@
 import express from "express";
+import adminAuth from "../middleware/auth.js";
 import {
   createPost,
-  getPost,
+  getSinglePost,
   updatePost,
   deletePost,
   getAllPost,
+  getSinglePostComment,
 } from "../controllers/postController.js";
 import {
-  createUser,
   getAllUser,
   getUser,
   deleteUser,
@@ -20,12 +21,21 @@ const router = express.Router();
 
 router.route("/login").post(adminLogin);
 router.route("/signup").post(adminSignup);
+// router.route("/isverify").post(verifyEmail)
 
 // post Controler
-router.route("/post").get(getAllPost).post(createPost);
-router.route("/post/:postId").get(getPost).delete(deletePost).put(updatePost);
+router.route("/post").get(getAllPost).post(adminAuth, createPost);
+router
+  .route("/post/:postId")
+  .get(getSinglePost)
+  .delete(adminAuth, deletePost)
+  .put(adminAuth, updatePost);
+router.route("/post/:postId/comment").get(getSinglePostComment);
 // user Controler
-router.route("/user").get(getAllUser).post(createUser);
-router.route("/user/:userId").get(getUser).delete(deleteUser);
+router.route("/user").get(adminAuth, getAllUser);
+router
+  .route("/user/:userId")
+  .get(adminAuth, getUser)
+  .delete(adminAuth, deleteUser);
 
 export default router;

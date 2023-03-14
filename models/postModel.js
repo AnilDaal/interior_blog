@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
-  title: String,
-  discreption: String,
+  title: {
+    type: String,
+    requied: true,
+    minlength: [6, "title have minimum 6 word"],
+  },
+  discreption: { type: String, required: true },
   image: String,
 });
 

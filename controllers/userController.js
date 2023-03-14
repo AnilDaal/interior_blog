@@ -23,7 +23,6 @@ const getUser = catchAsync(async (req, res, next) => {
   }
   res.status(201).json({
     status: "success",
-    results: UserData.length,
     data: UserData,
   });
 });

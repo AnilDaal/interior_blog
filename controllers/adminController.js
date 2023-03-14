@@ -2,12 +2,17 @@ import Admin from "../models/adminModel.js";
 import catchAsync from "../utils/catchAsync.js";
 import AppError from "../utils/appError.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 // admin login
 
 const adminLogin = catchAsync(async (req, res, next) => {
+  console.log("helo");
   const { email, password } = req.body;
   const adminData = await Admin.findOne({ email });
+  // if (adminData.isVerified) {
+  //   next(new AppError("Email not verify", 401));
+  // }
   if (!adminData) {
     next(new AppError("Admin not found", 401));
   }
@@ -15,10 +20,13 @@ const adminLogin = catchAsync(async (req, res, next) => {
   if (!securePassword) {
     next(new AppError("invalid password", 401));
   }
+  const token = jwt.sign({ user: adminData }, process.env.SECRET_KEY, {
+    expiresIn: "7d",
+  });
 
   res.status(201).json({
     status: "success",
-    data: adminData,
+    data: token,
   });
 });
 
@@ -33,6 +41,7 @@ const adminSignup = catchAsync(async (req, res, next) => {
     email,
     password: securePassword,
   });
+  // send mail to the email
   res.status(201).json({
     status: "success",
     data: adminData,
